@@ -1,4 +1,6 @@
 
+include $(ROOT)/lib/makedef.mk
+
 all: mk_dir $(MODULE)
 
 mk_dir:

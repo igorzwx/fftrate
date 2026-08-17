@@ -6,6 +6,7 @@ all:
 	for proj in $(PROJS);					\
 	do							\
 		( cd $$proj; $(MAKE) -f $(MAKEF) );		\
+		( cd $$proj; $(MAKE) -f $(MAKEF) so );		\
 	done
 
 clean:

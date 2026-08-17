@@ -409,7 +409,7 @@ static int pcm_rate_init( void *obj, snd_pcm_rate_info_t *info )
 			double l_out = log2( (double)out_rate / (double)info->out.period_size );
 			int   fpp   = (int)( 0.5 * ( l_in + l_out ) );
 
-			fpp = max( fpp, 0 );
+			fpp = MAX( fpp, 0 );
 			in_rate	 = info->in.period_size  << fpp;
 			out_rate = info->out.period_size << fpp;
 		}
@@ -595,7 +595,7 @@ static void pcm_rate_convert
 
 		//--------------------------------------------------------------------------------------------
 
-		frames = min( src->buffer_size - src->rem, src_frames ) / src->unit_size;
+		frames = MIN( src->buffer_size - src->rem, src_frames ) / src->unit_size;
 
 		for( ch = 0 ; ch < inst->channels ; ch ++ )
 		{
@@ -684,7 +684,7 @@ static void pcm_rate_convert
 
 		//--------------------------------------------------------------------------------------------
 
-		frames = min( dst->rem, dst_frames ) / dst->unit_size;
+		frames = MIN( dst->rem, dst_frames ) / dst->unit_size;
 
 		for( ch = 0 ; ch < inst->channels ; ch ++ )
 		{

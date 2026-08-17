@@ -1,4 +1,14 @@
-libasound2-plugin-fftrate (1.6.3) UNRELEASED; urgency=low
+fftrate (1.6.3.1) UNRELEASED; urgency=medium
+
+  * Makefile: build and install full tree (bin, lib, include, pkgconfig, alsa-lib, etc) via "make"/"make install"
+  * Statically link core libraries into arateconf, pcm-utils, and ALSA plugin
+  * Fix packets/Makefile and debian/*.install paths to match new build layout
+  * Fix for GCC 12+
+  * debian: migrate to debhelper-compat (= 13), remove debian/compat; fix shlibs dependency calculation in debian/rules
+
+ -- igorzwx <igorzwx@devuan.cargo-cult.org>  Mon, 17 Aug 2026 15:42:42 +0200
+
+libasound2-plugin-fftrate (1.6.3) unstable; urgency=low
 
   * Add PCM utils, codebase update
 

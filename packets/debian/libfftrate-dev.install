@@ -1,0 +1,4 @@
+../include/fftrate usr/include
+../lib/lib*.a usr/lib/${DEB_HOST_MULTIARCH}
+../lib/lib*.so usr/lib/${DEB_HOST_MULTIARCH}
+../lib/${DEB_HOST_MULTIARCH}/pkgconfig/fftrate.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig

@@ -141,13 +141,13 @@ typedef struct
 }
 
 
-#define cmplx_min( _r, _x, _y )			\
+#define cmplx_MIN( _r, _x, _y )			\
 {										\
 	cmplx_make							\
 		(								\
 			_r,							\
-			min( (_x).re, (_y).re ),	\
-			min( (_x).im, (_y).im )		\
+			MIN( (_x).re, (_y).re ),	\
+			MIN( (_x).im, (_y).im )		\
 		);								\
 }
 
@@ -157,7 +157,7 @@ typedef struct
 	cmplx_make							\
 		(								\
 			_r,							\
-			min( (_x).re, _rl ),		\
+			MIN( (_x).re, _rl ),		\
 			(_x).im						\
 		);								\
 }
@@ -169,18 +169,18 @@ typedef struct
 		(								\
 			_r,							\
 			(_x).re,					\
-			min( (_x).im, _il )			\
+			MIN( (_x).im, _il )			\
 		);								\
 }
 
 
-#define cmplx_max( _r, _x, _y )			\
+#define cmplx_MAX( _r, _x, _y )			\
 {										\
 	cmplx_make							\
 		(								\
 			_r,							\
-			max( (_x).re, (_y).re ),	\
-			max( (_x).im, (_y).im )		\
+			MAX( (_x).re, (_y).re ),	\
+			MAX( (_x).im, (_y).im )		\
 		);								\
 }
 
@@ -190,7 +190,7 @@ typedef struct
 	cmplx_make							\
 		(								\
 			_r,							\
-			max( (_x).re, _rl ),		\
+			MAX( (_x).re, _rl ),		\
 			(_x).im						\
 		);								\
 }
@@ -202,7 +202,7 @@ typedef struct
 		(								\
 			_r,							\
 			(_x).re,					\
-			max( (_x).im, _il )			\
+			MAX( (_x).im, _il )			\
 		);								\
 }
 

@@ -59,18 +59,18 @@ INT main( INT nArg, CHAR *pszArgs[] )
 		switch( nCnt )
 		{
 		case 'h':
-			nHelpLayer = max( nHelpLayer, 2 );
+			nHelpLayer = MAX( nHelpLayer, 2 );
 			break;
 
 		case 0:
 			switch( nLongIdx )
 			{
 			case 0: // help
-				nHelpLayer = max( nHelpLayer, 2 );
+				nHelpLayer = MAX( nHelpLayer, 2 );
 				break;
 
 			case 1: // help-all
-				nHelpLayer = max( nHelpLayer, 3 );
+				nHelpLayer = MAX( nHelpLayer, 3 );
 				break;
 			}
 			break;

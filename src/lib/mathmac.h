@@ -61,12 +61,12 @@
 //================================================================
 //  Min & max computing
 //----------------------------------------------------------------
-#ifndef min
-#define min( _x, _y )					( (_x) < (_y) ? (_x) : (_y) )
+#ifndef MIN
+#define MIN( _x, _y )					( (_x) < (_y) ? (_x) : (_y) )
 #endif
 
-#ifndef max
-#define max( _x, _y )					( (_x) > (_y) ? (_x) : (_y) )
+#ifndef MAX
+#define MAX( _x, _y )					( (_x) > (_y) ? (_x) : (_y) )
 #endif
 
 

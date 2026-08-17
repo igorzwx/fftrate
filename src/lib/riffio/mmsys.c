@@ -81,7 +81,7 @@ PCHANNELORDER mmsys_channel_order_make( CONST CHAR *str_desc )
 				if( (INT)strlen( str_desc ) < len )
 					continue;
 
-				strncpyt( test, str_desc, min( len + 1, MAX_NAME ) );
+				strncpyt( test, str_desc, MIN( len + 1, MAX_NAME ) );
 
 				//----------------------------------------------------------------
 
@@ -440,7 +440,7 @@ PWAVEFORMATEX mmsys_format_alloc( DWORD size )
 
 	//----------------------------------------------------------------
 
-	size = max( size, sizeof(WAVEFORMATEX) );
+	size = MAX( size, sizeof(WAVEFORMATEX) );
 
 	arralloc_bytes( p_format, size );
 	if( !arrcheck( p_format ) )

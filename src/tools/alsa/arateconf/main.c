@@ -43,8 +43,8 @@
 #define MAIN_MENU_SIZE			( 20 + 1 )	// Number of items (see below) + Finalize
 #define DEVICE_MENU_SIZE		6			// Space + Set number + Turn On/Off + Space + Return + Finalize
 
-#define MAX_CARDS				min( MENU_MAX_ITEMS - MAIN_MENU_SIZE, 10 )
-#define MAX_DEVICE				min( MENU_MAX_ITEMS - DEVICE_MENU_SIZE, 10 )
+#define MAX_CARDS				MIN( MENU_MAX_ITEMS - MAIN_MENU_SIZE, 10 )
+#define MAX_DEVICE				MIN( MENU_MAX_ITEMS - DEVICE_MENU_SIZE, 10 )
 
 
 #define CONVERT_FFT				"fftrate"
@@ -670,8 +670,8 @@ STATIC VOID do_buffer_mul( CONST MENUITEM *self )
 	printf( "Buffer multiplier = " );
 	unref_result( scanf( "%d", &pCurrParam->buff_mul ) );
 	
-	pCurrParam->buff_mul = max( pCurrParam->buff_mul, 1 );
-	pCurrParam->buff_mul = min( pCurrParam->buff_mul, 8 );
+	pCurrParam->buff_mul = MAX( pCurrParam->buff_mul, 1 );
+	pCurrParam->buff_mul = MIN( pCurrParam->buff_mul, 8 );
 
 	bApply = TRUE;
 }
@@ -685,8 +685,8 @@ STATIC VOID do_period_mul( CONST MENUITEM *self )
 	printf( "Period multiplier = " );
 	unref_result( scanf( "%d", &pCurrParam->period_mul ) );
 	
-	pCurrParam->period_mul = max( pCurrParam->period_mul, 1 );
-	pCurrParam->period_mul = min( pCurrParam->period_mul, 8 );
+	pCurrParam->period_mul = MAX( pCurrParam->period_mul, 1 );
+	pCurrParam->period_mul = MIN( pCurrParam->period_mul, 8 );
 
 	bApply = TRUE;
 }
@@ -1231,14 +1231,14 @@ INT main( INT nargs, CHAR *argv[] )
 		switch( cnt )
 		{
 		case 'h':
-			n_help_layer	= max( n_help_layer, 2 );
+			n_help_layer	= MAX( n_help_layer, 2 );
 			break;
 
 		case 0:
 			switch( long_idx )
 			{
 			case 0: // help
-				n_help_layer	= max( n_help_layer, 2 );
+				n_help_layer	= MAX( n_help_layer, 2 );
 				break;
 			}
 			break;

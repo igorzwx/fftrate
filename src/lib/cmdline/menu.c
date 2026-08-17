@@ -278,7 +278,7 @@ VOID menu_add( MENU *menu, INT pos, INT count )
 
 		if( pos < len )
 		{
-			count = min( count, MENU_MAX_ITEMS - len + pos );
+			count = MIN( count, MENU_MAX_ITEMS - len + pos );
 
 			arrmove
 				(

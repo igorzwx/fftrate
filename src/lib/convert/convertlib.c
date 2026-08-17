@@ -25,7 +25,7 @@ STATIC VOID buffer_shift( PSAMPLESTATE p_sample, DWORD size )
 {
 	INT chn;
 
-	size = min( size, p_sample->rem );
+	size = MIN( size, p_sample->rem );
 	p_sample->rem -= size;
 
 	for( chn = 0 ; chn < p_sample->n_of_chann ; chn ++ )
@@ -44,8 +44,8 @@ STATIC VOID buffer_clear( PSAMPLESTATE p_sample, DWORD start, DWORD size )
 {
 	INT chn;
 
-	start = min( start, p_sample->packet_len );
-	size  = min( size, p_sample->packet_len - start );
+	start = MIN( start, p_sample->packet_len );
+	size  = MIN( size, p_sample->packet_len - start );
 
 	for( chn = 0 ; chn < p_sample->n_of_chann ; chn ++ )
 		arrzero( &p_sample->pp_buffers[chn][start], size );
@@ -56,8 +56,8 @@ STATIC VOID buffers_merge( PSAMPLESTATE p_sample_dst, PSAMPLESTATE p_sample_src,
 {
 	INT chn;
 	
-	size = min( size, p_sample_dst->packet_len - p_sample_dst->rem );
-	size = min( size, p_sample_src->rem );
+	size = MIN( size, p_sample_dst->packet_len - p_sample_dst->rem );
+	size = MIN( size, p_sample_src->rem );
 
 	for( chn = 0 ; chn < p_sample_dst->n_of_chann ; chn ++ )
 	{
@@ -558,7 +558,7 @@ BOOL resampling_init( PCONVINST h_inst, INT freq_in, INT freq_out, DWORD transfo
 	return transform_alloc
 		(
 			&h_inst->transform,
-			max( h_inst->resampler_in.spectrum_len, h_inst->resampler_out.spectrum_len )
+			MAX( h_inst->resampler_in.spectrum_len, h_inst->resampler_out.spectrum_len )
 		);
 }
 
@@ -732,7 +732,7 @@ STATIC DATA chann_relations_weight
 	DATA val1 = fn_chann_relations_weight( p_desc1 );
 	DATA val2 = fn_chann_relations_weight( p_desc2 );
 
-	return min( val1, val2 ) / max( val1, val2 );
+	return MIN( val1, val2 ) / MAX( val1, val2 );
 }
 
 
@@ -885,7 +885,7 @@ BOOL transform_matrix_make( PCONVINST h_inst )
 			if( CHANN_IS_USED( val ) )
 			{
 				p_mixer->relation[p_mixer->channels].idx = chn_in;
-				p_mixer->relation[p_mixer->channels].val = min( val, D( 1.0 ) );
+				p_mixer->relation[p_mixer->channels].val = MIN( val, D( 1.0 ) );
 
 				p_mixer->channels ++;
 			}
@@ -960,7 +960,7 @@ VOID transform_matrix_processing
 	PSAMPLESTATE	p_sample_out
 )
 {
-	DWORD rem = min( p_sample_in->rem, p_sample_out->packet_len - p_sample_out->rem );
+	DWORD rem = MIN( p_sample_in->rem, p_sample_out->packet_len - p_sample_out->rem );
 	INT chn_in, chn_out;
 
 	//---------------------------------------------------------------------------
@@ -1147,7 +1147,7 @@ STATIC VOID samples_get_peaks( PSAMPLESTATE p_sample, INT from, INT to )
 		for( pos = from ; pos < to ; pos ++ )
 		{
 			DATA val = (DATA)fabs( p_data[pos] );
-			max_val  = max( max_val, val );
+			max_val  = MAX( max_val, val );
 		}
 
 		p_peaks->pValues[chn] = max_val * NORM_FLOAT_OUT;
@@ -1165,7 +1165,7 @@ DWORD samples_load
 {
 	DWORD skipped		= p_sample->rem;
 	DWORD buff_size		= buff_size_in_bytes / p_sample->sample_size;
-	DWORD load_size		= min( buff_size, p_sample->packet_len - skipped );
+	DWORD load_size		= MIN( buff_size, p_sample->packet_len - skipped );
 	DWORD stop_pos		= skipped + load_size;
 
 	INT  step = p_sample->n_of_chann;
@@ -1299,8 +1299,8 @@ DWORD samples_save
 )
 {
 	DWORD buff_size	= buff_size_in_bytes / p_sample->sample_size;
-	DWORD save_size	= min( buff_size, p_sample->rem );
-	DWORD skipped	= min( save_size, p_sample->skip_len );
+	DWORD save_size	= MIN( buff_size, p_sample->rem );
+	DWORD skipped	= MIN( save_size, p_sample->skip_len );
 
 	INT step = p_sample->n_of_chann;
 	INT chn;

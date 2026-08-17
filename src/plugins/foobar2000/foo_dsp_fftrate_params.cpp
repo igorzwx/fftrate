@@ -16,7 +16,7 @@ bool foo_dsp_fftrate_params::set_data( const dsp_preset &p_data )
 	const t_int32 *raw_data = static_cast <const t_int32 *>( p_data.get_data() );
 
 	t_size dataLen = p_data.get_data_size() / sizeof(t_int32);
-	dataLen = min( dataLen, m_paramCount );
+	dataLen = MIN( dataLen, m_paramCount );
 
 	for( t_size n = 0 ; n < dataLen ; n ++ )
 	{

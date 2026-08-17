@@ -204,7 +204,7 @@ DWORD waveio_find_chunk( HWAVEIO p_inst, FOURCC fcc_type )
 			if( fseek( h_inst->p_file, p_chunk->chunk.size, SEEK_CUR ) )
 				break;
 
-			h_inst->rem_size -= min( h_inst->rem_size, p_chunk->chunk.size );
+			h_inst->rem_size -= MIN( h_inst->rem_size, p_chunk->chunk.size );
 		}
 
 		break;
@@ -402,12 +402,12 @@ DWORD waveio_seek( HWAVEIO p_inst, LONG shift, DWORD seek )
 		if( shift < 0 )
 		{
 			shift = -shift;
-			shift = min( pos - start, (DWORD)shift );
+			shift = MIN( pos - start, (DWORD)shift );
 			shift = -shift;
 		}
 
 		if( shift > 0 )
-			shift = min( stop - pos, (DWORD)shift );
+			shift = MIN( stop - pos, (DWORD)shift );
 
 		pos = alignment( pos - start + shift, h_inst->align ) + start;
 		rem = stop - pos;
@@ -448,8 +448,8 @@ DWORD waveio_read( HWAVEIO p_inst, PBYTE p_buff, DWORD buff_size )
 		h_inst->open_type == WAVE_IO_READ
 	)
 	{
-		buff_size = min( h_inst->rem_size, buff_size );
-		buff_size = min( h_inst->work_chunk->rem_size, buff_size );
+		buff_size = MIN( h_inst->rem_size, buff_size );
+		buff_size = MIN( h_inst->work_chunk->rem_size, buff_size );
 
 		if( more_zero( buff_size ) )
 			buff_size = (DWORD)fread( p_buff, sizeof(BYTE), buff_size, h_inst->p_file );
@@ -480,7 +480,7 @@ DWORD waveio_write( HWAVEIO p_inst, CONST BYTE *p_buff, DWORD buff_size )
 	)
 	{
 		if( h_inst->work_chunk->rem_size )
-			buff_size = min( buff_size, h_inst->work_chunk->rem_size );
+			buff_size = MIN( buff_size, h_inst->work_chunk->rem_size );
 
 		buff_size = (DWORD)fwrite( p_buff, sizeof(BYTE), buff_size, h_inst->p_file );
 

@@ -1,7 +1,7 @@
 MODULE = pcm_mse
 
 FILES  = Main.o
-LIBS   = -lpcm_common -lconvert -lfft -lmathex -lriffio -lcmdline -lprofiler -lm
+LIBS   = -Wl,-Bstatic -lpcm_common -lconvert -lfft -lmathex -lriffio -lcmdline -lprofiler -Wl,-Bdynamic -lm
 
 ROOT   = ../..
 

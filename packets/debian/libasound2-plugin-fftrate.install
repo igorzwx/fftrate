@@ -1,2 +1,2 @@
-etc/
-usr/lib/
+../etc/fftrate.conf etc/
+../lib/${DEB_HOST_MULTIARCH}/alsa-lib/libasound_module_rate_fftrate.so usr/lib/${DEB_HOST_MULTIARCH}/alsa-lib  

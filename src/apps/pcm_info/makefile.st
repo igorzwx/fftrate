@@ -1,7 +1,7 @@
 MODULE = pcm_info
 
 FILES  = Main.o
-LIBS   = -lpcm_common -lriffio -lmathex -lcmdline
+LIBS   = -Wl,-Bstatic -lpcm_common -lriffio -lmathex -lcmdline -Wl,-Bdynamic
 
 ROOT   = ../..
 

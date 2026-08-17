@@ -1,6 +1,6 @@
 MODULE = arateconf
 FILES  = alsa.o conf.o main.o
-LIBS   = -lmathex -lcmdline -lthr -lasound -lm -lpthread
+LIBS   = -Wl,-Bstatic -lmathex -lcmdline -lthr -Wl,-Bdynamic -lasound -lm -lpthread
 ROOT   = ../../..
 
 CMP    = $(CC)

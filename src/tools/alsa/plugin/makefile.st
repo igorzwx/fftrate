@@ -1,6 +1,6 @@
 MODULE = asound_module_rate_fftrate
 FILES  = plugin.o
-LIBS   = -lconvert -lfft -lriffio -lmathex -lcmdline -lm -lasound
+LIBS   = -Wl,-Bstatic -lconvert -lfft -lriffio -lmathex -lcmdline -Wl,-Bdynamic -lm -lasound 
 ROOT   = ../../..
 
 CMP    = $(CC)

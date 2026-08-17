@@ -310,8 +310,8 @@ VOID mse_complex( HMSE p_inst, CONST COMPLEX *p_x, CONST COMPLEX *p_y, COMPLEX *
 			
 			if( flag_check_mask( h_inst->flag, MSE_FLAG_RANGE ) )
 			{
-				cmplx_min( p_range->vMin.cmplx, p_range->vMin.cmplx, *p_x );
-				cmplx_max( p_range->vMax.cmplx, p_range->vMax.cmplx, *p_x );
+				cmplx_MIN( p_range->vMin.cmplx, p_range->vMin.cmplx, *p_x );
+				cmplx_MAX( p_range->vMax.cmplx, p_range->vMax.cmplx, *p_x );
 			}
 			
 			//----------------------------------------------------------------
@@ -386,8 +386,8 @@ VOID mse_data( HMSE p_inst, CONST DATA *p_x, CONST DATA *p_y, DATA *p_r, INT len
 
 			if( flag_check_mask( h_inst->flag, MSE_FLAG_RANGE ) )
 			{
-				p_range->vMin.data = min( p_range->vMin.data, *p_x );
-				p_range->vMax.data = max( p_range->vMax.data, *p_x );
+				p_range->vMin.data = MIN( p_range->vMin.data, *p_x );
+				p_range->vMax.data = MAX( p_range->vMax.data, *p_x );
 			}
 			
 			//----------------------------------------------------------------
@@ -461,8 +461,8 @@ VOID mse_long( HMSE p_inst, CONST LONG *p_x, CONST LONG *p_y, LONG *p_r, INT len
 			
 			if( flag_check_mask( h_inst->flag, MSE_FLAG_RANGE ) )
 			{
-				p_range->vMin.long_int = min( p_range->vMin.long_int, *p_x );
-				p_range->vMax.long_int = max( p_range->vMax.long_int, *p_x );
+				p_range->vMin.long_int = MIN( p_range->vMin.long_int, *p_x );
+				p_range->vMax.long_int = MAX( p_range->vMax.long_int, *p_x );
 			}
 			
 			//----------------------------------------------------------------

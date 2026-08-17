@@ -1,7 +1,7 @@
 MODULE = pcm_conv
 
 FILES  = Main.o
-LIBS   = -lpcm_common -lconvert -lfft -lmathex -lprofiler -lcmdline -lriffio -lthr -lm -lpthread
+LIBS   = -Wl,-Bstatic -lpcm_common -lconvert -lfft -lmathex -lprofiler -lcmdline -lriffio -lthr -Wl,-Bdynamic -lm -lpthread
 
 ROOT   = ../..
 

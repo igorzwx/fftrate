@@ -206,7 +206,7 @@ VOID strncpyt( CHAR *dst, CONST CHAR *src, INT len )
 {
 	if( more_zero( len ) )
 	{
-		arrmove( dst, src, min( len, (INT)strlen( src ) + 1 ) );
+		arrmove( dst, src, MIN( len, (INT)strlen( src ) + 1 ) );
 		str_terminate( dst, len );
 	}
 }
@@ -216,8 +216,8 @@ VOID strncatt( CHAR *dst, CONST CHAR *src, INT len )
 {
 	if( more_zero( len ) )
 	{
-		INT pos  = min( len, (INT)strlen( dst ) + 1 ) - 1;
-		INT size = min( len - pos, (INT)strlen( src ) + 1 );
+		INT pos  = MIN( len, (INT)strlen( dst ) + 1 ) - 1;
+		INT size = MIN( len - pos, (INT)strlen( src ) + 1 );
 
 		arrmove( &dst[pos], src, size );
 		str_terminate( dst, len );

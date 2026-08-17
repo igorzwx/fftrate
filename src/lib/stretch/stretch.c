@@ -62,7 +62,7 @@ HSTRETCH stretch_close( HSTRETCH p_inst )
 //----------------------------------------------------------------
 BOOL stretch_reset( HSTRETCH p_inst )
 {
-	PSTRETCHINST h_inst = (PSTRETCHINST)p_inst;
+	// PSTRETCHINST h_inst = (PSTRETCHINST)p_inst;
 	return TRUE;
 }
 
@@ -79,8 +79,8 @@ BOOL stretch_processing
 	PDWORD		p_dst_size
 )
 {
-	PSTRETCHINST h_inst = (PSTRETCHINST)p_inst;
-	DWORD size = min( *p_src_size, *p_dst_size );
+	// PSTRETCHINST h_inst = (PSTRETCHINST)p_inst;
+	DWORD size = MIN( *p_src_size, *p_dst_size );
 
 	arrcpy( p_dst, p_src, size );
 

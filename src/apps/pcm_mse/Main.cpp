@@ -385,18 +385,18 @@ INT main( INT nArg, CHAR *pszArgs[] )
 			break;
 
 		case 'h':
-			nHelpLayer = max( nHelpLayer, 2 );
+			nHelpLayer = MAX( nHelpLayer, 2 );
 			break;
 
 		case 0:
 			switch( nLongIdx )
 			{
 			case 0: // help
-				nHelpLayer = max( nHelpLayer, 2 );
+				nHelpLayer = MAX( nHelpLayer, 2 );
 				break;
 
 			case 1: // help-all
-				nHelpLayer = max( nHelpLayer, 3 );
+				nHelpLayer = MAX( nHelpLayer, 3 );
 				break;
 			}
 			break;
@@ -474,7 +474,7 @@ INT main( INT nArg, CHAR *pszArgs[] )
 			if( mmsys_format_info( pFile->pFormat, 't' ) == WAVE_FORMAT_IEEE_FLOAT )
 				bFloatData |= TRUE;
 
-			nBits = max( nBits, (WORD)mmsys_format_info( pFile->pFormat, 'b' ) );
+			nBits = MAX( nBits, (WORD)mmsys_format_info( pFile->pFormat, 'b' ) );
 		}
 
 		if( nCnt < 2 )
@@ -577,7 +577,7 @@ INT main( INT nArg, CHAR *pszArgs[] )
 
 		//-------------------------------------------------------------------------
 
-		dwSize = min( dwDataSize[0], dwDataSize[1] );
+		dwSize = MIN( dwDataSize[0], dwDataSize[1] );
 
 		if( dwDataSize[0] != dwDataSize[1] )
 		{
@@ -593,11 +593,11 @@ INT main( INT nArg, CHAR *pszArgs[] )
 		//-------------------------------------------------------------------------
 
 		if( dwStop )
-			dwStop = min( dwStop, dwSize );
+			dwStop = MIN( dwStop, dwSize );
 		else
 			dwStop = dwSize;
 
-		dwStart = min( dwStart, dwStop );
+		dwStart = MIN( dwStart, dwStop );
 		dwSize	= ( dwStop - dwStart ) * pGlobalFormat->nBlockAlign;
 
 		//-------------------------------------------------------------------------
@@ -628,7 +628,7 @@ INT main( INT nArg, CHAR *pszArgs[] )
 			for( nCnt = 0 ; nCnt < 2 ; nCnt ++ )
 				wavefile_load( &InputFiles[nCnt] );
 
-			dwDonePos = min( InputFiles[0].dwRemOut, InputFiles[1].dwRemOut );
+			dwDonePos = MIN( InputFiles[0].dwRemOut, InputFiles[1].dwRemOut );
 			if( dwDonePos == 0 )
 				break;
 

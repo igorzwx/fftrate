@@ -166,7 +166,7 @@ STATIC INT calculate_ratio( INT rate, INT val, INT def )
 {
 	INT n = (INT)( ( D( def ) * D( rate ) ) / ( D( DEF_RATE ) * D( val ) ) + 0.5 );
 
-	return val * max( n, 1 );
+	return val * MAX( n, 1 );
 }
 
 
@@ -199,12 +199,12 @@ INT correct_rate( INT rate )
 
 	for( n = 0 ; n < n_rates ; n ++ )
 	{
-		min_rate = min( min_rate, typically_rate[n] );
-		max_rate = max( max_rate, typically_rate[n] );
+		min_rate = MIN( min_rate, typically_rate[n] );
+		max_rate = MAX( max_rate, typically_rate[n] );
 	}
 	
-	rate = max( rate, min_rate );
-	rate = min( rate, max_rate );
+	rate = MAX( rate, min_rate );
+	rate = MIN( rate, max_rate );
 	
 	return rate;
 }

@@ -153,8 +153,8 @@ STATIC VOID cmdline_progress_fill( INT done )
 {
 	fputs( "\r[", stderr );
 
-	done = max( done, 0 );
-	done = min( done, PROGRESS_LEN );
+	done = MAX( done, 0 );
+	done = MIN( done, PROGRESS_LEN );
 
 	fprintfill( stderr, g_fill_prev, done );
 	fputc( g_fill_curr, stderr );

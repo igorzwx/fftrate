@@ -2,7 +2,7 @@ MODULE = pcm_stretch
 DIRC   = ../pcm_common
 
 FILES  = Main.o
-LIBS   = -lpcm_common -lfft -lmathex -lprofiler -lcmdline -lriffio -lthr -lm -lpthread
+LIBS   = -Wl,-Bstatic -lpcm_common -lfft -lmathex -lprofiler -lcmdline -lriffio -lthr -Wl,-Bdynamic -lm -lpthread
 
 ROOT   = ../..
 

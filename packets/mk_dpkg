@@ -1,4 +1,8 @@
 #!/bin/sh
 
+set -e
+
 dpkg-buildpackage -rfakeroot
+mkdir -p ../../dist
+mv ../*.deb ../*.changes ../*.buildinfo ../*.dsc ../*.tar.gz ../*.tar.xz ../../dist 2>/dev/null || true
 make purge

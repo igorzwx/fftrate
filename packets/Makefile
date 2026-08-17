@@ -1,25 +1,15 @@
 DEBD   = debian
-USRD   = usr
-
-
-ifeq ($(DSTD),)
-PLUGD  = $(USRD)/lib/$(shell uname -i)-linux-gnu/alsa-lib
-else
-PLUGD  = $(USRD)/lib/$(DSTD)/alsa-lib
-endif
-
+USRD   = usr 
 
 all:
-	( cd ../; $(MAKE) libs tools apps )
-	mkdir -p $(PLUGD)
-	cp ../bin/*.so $(PLUGD)
+	( cd ../; $(MAKE) all )
 
 purge: clean
 	( cd ../; $(MAKE) purge )
 	rm -rf $(USRD)
 
 clean:
-	( cd $(DEBD); find -mindepth 1 -maxdepth 1 -type d | xargs rm -rf )
+	( cd $(DEBD); find -mindepth 1 -maxdepth 1 -type d ! -name source | xargs rm -rf )
 	rm -rf $(DEBD)/tmp
 	rm -rf $(DEBD)/*-utils
 	rm -f $(DEBD)/*substvars

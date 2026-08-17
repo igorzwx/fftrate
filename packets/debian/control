@@ -1,14 +1,15 @@
-Source: libasound2-plugin-fftrate
+Source: fftrate
 Priority: optional
-Maintainer: Petrov Sergey <petrovse@mail.ru>
-Build-Depends: build-essential, libasound2-dev (>= 1.0.22),
-Standards-Version: 3.8.3
+Section: libs
+Maintainer: igorzwx <igorzwx@devuan.cargo-cult.org>
+Build-Depends: debhelper-compat (= 13), build-essential, libasound2-dev (>= 1.0.22),
+Standards-Version: 4.6.2
 
 Package: libasound2-plugin-fftrate
 Section: libs
 Architecture: i386 amd64
 Multi-Arch: same
-Depends: libasound2, libasound2-plugins, ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ALSA library additional plugin
  This package contains plugin for the ALSA library that are
  not included in the main libasound2 package.
@@ -18,10 +19,28 @@ Description: ALSA library additional plugin
  .
  ALSA is the Advanced Linux Sound Architecture.
 
+Package: libfftrate-dev
+Section: libdevel
+Architecture: i386 amd64
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: fftrate development files
+ This package contains the header files, static and shared libraries needed for  
+ developing applications that use the fftrate audio processing libraries.  
+ .  
+ The fftrate libraries provide:  
+   - Sample rate conversion using FFT/DCT transforms  
+   - Time/pitch stretching capabilities  
+   - Mathematical operations for audio processing  
+   - WAV file I/O utilities  
+ .  
+ Install this package if you want to develop software that uses the  
+ fftrate audio processing engine.
+
 Package: alsa-config-utils
 Section: miscellaneous
 Architecture: i386 amd64
-Depends: libasound2, libasound2-plugins, libasound2-plugin-fftrate, swh-plugins, ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, swh-plugins
 Description: ALSA configurator
  This package contains utilities for the ALSA configuration.
  .
@@ -31,7 +50,7 @@ Description: ALSA configurator
 Package: pcm-utils
 Section: miscellaneous
 Architecture: i386 amd64
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Wave PCM utils
  This package contains simple utilities for the wave PCM processing.
  .

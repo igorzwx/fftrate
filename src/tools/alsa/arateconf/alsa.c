@@ -26,7 +26,7 @@ INT enum_devices( CONST CARDNAME *p_card, CARDNAME *p_devs, INT n_dev, BOOL b_ou
 {
 	INT n_add;
 	
-	n_dev = min( n_dev, 4 );
+	n_dev = MIN( n_dev, 4 );
 	
 	for( n_add = 0 ; n_add < n_dev ; n_add ++ )
 	{
@@ -225,7 +225,7 @@ INT enum_devices( CONST CARDNAME *p_card, CARDNAME *p_devs, INT n_dev, BOOL b_ou
 				arrzero_unit( &p_devs[n_add] );
 				p_devs[n_add].dev_out = pcm_device;
 				
-				snprintf
+				snprintft
 					(
 						p_devs[n_add].desc,
 						MAX_STRING,
