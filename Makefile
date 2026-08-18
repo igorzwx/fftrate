@@ -2,7 +2,7 @@
 include src/lib/makedef.mk
 
 PREFIX ?= /usr
-ARCH   := $(shell gcc -dumpmachine)
+ARCH := $(shell gcc -dumpmachine)
 ifneq ($(DSTD),)
 ARCH := $(DSTD)
 endif

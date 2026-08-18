@@ -1,5 +1,5 @@
-DEBD   = debian
-USRD   = usr 
+DEBD = debian
+USRD = usr
 
 all:
 	( cd ../; $(MAKE) all )
