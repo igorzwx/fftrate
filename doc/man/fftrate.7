@@ -1,0 +1,52 @@
+.TH FFTRATE 7 "2026" "fftrate 1.6.3" "Miscellaneous"
+.SH NAME
+fftrate \- FFT/DCT-based high-quality ALSA sample rate converter plugin
+.SH DESCRIPTION
+.B fftrate
+is an ALSA PCM rate-converter plugin (asound_module_rate_fftrate.so) providing
+high-fidelity sample rate conversion using FFT or DCT resampling, as an
+alternative to ALSA's built-in "speexrate"/"samplerate" converters and to
+low-quality hardware resamplers found in some Intel HDA/Realtek codecs.
+.PP
+Enable it via:
+.RS
+defaults.pcm.rate_converter "fftrate"
+.RE
+.PP
+in
+.I ~/.asoundrc
+(or
+.IR /etc/asound.conf ", for root),"
+or use
+.BR arateconf (1)
+to generate this configuration interactively.
+.SH CONFIGURATION
+Advanced settings are read from
+.I /etc/fftrate.conf
+at plugin initialization time. Recognized keys:
+.TP
+.B transform
+.BR dct " (default) or " fft
+.TP
+.B window
+.BR vorbis " (default), " hanning ", or " rect
+.TP
+.B zummer
+.BR on / off " \(em debug feature marking the first output sample of each session"
+.SH FILES
+.TP
+.I /etc/fftrate.conf
+Global plugin configuration (transform, window, zummer).
+.TP
+.I ~/.asoundrc
+User ALSA configuration selecting fftrate as rate_converter.
+.TP
+.I /etc/asound.conf
+System-wide ALSA configuration (used instead of ~/.asoundrc when run as root by arateconf).
+.SH SEE ALSO
+.BR arateconf (1),
+.BR pcm_conv (1),
+.BR pcm_info (1),
+.BR pcm_mse (1)
+.SH AUTHOR
+Petrov S.E., https://github.com/PetrovSE/fftrate

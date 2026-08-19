@@ -1,0 +1,53 @@
+.TH PCM_INFO 1 "2026" "fftrate 1.6.3" "User Commands"
+.SH NAME
+pcm_info \- display audio format and metadata of a WAV file
+.SH SYNOPSIS
+.B pcm_info
+.I file.wav
+.br
+.B pcm_info
+.RB [ \-h | \-\-help | \-\-help\-all | \-\-version ]
+.SH DESCRIPTION
+Displays detailed format information of a WAV file:
+.IP
+- Sample rate (Hz)
+.IP
+- Number of channels
+.IP
+- Bit depth (and actual storage)
+.IP
+- Channel mask and layout
+.IP
+- Total samples and duration
+.SH OPTIONS
+.TP
+.I file.wav
+Input WAVE file to inspect.
+.TP
+.B \-h, \-\-help
+Show usage message.
+.TP
+.B \-\-help\-all
+Show all help information.
+.TP
+.B \-\-version
+Show version information.
+.SH OUTPUT
+Prints to stdout:
+.PP
+.nf
+Parameters:
+Samples rate = 192000 Hz
+Channels = 2
+Bits per sample = 24 (actual: 24, fixed)
+Extensible format: ON
+Channel mask: 000003 hex, 3 dec
+Channels: FL, FR
+Samples: 42.080.131
+Duration: 3 min 39.167349 sec
+.fi
+.SH EXAMPLE
+.B pcm_info HiRes.wav
+.SH SEE ALSO
+.BR pcm_conv (1),
+.BR pcm_mse (1)

@@ -71,13 +71,21 @@
 STATIC HELPTXT_BEGIN( g_szHelp )
 	HELPTXT_ITEM( 1, "Usage: arateconf [-h|--help]"			),
 	HELPTXT_ITEM( 2, ""													),
+	HELPTXT_ITEM( 2, "arateconf is an interactive, self-explanatory utility to create"	),
+	HELPTXT_ITEM( 2, "ALSA configuration files (~/.asoundrc)."			),
+	HELPTXT_ITEM( 2, "By default it is configured for HiRes 32-bit Integer 192kHz."	),
+	HELPTXT_ITEM( 2, "The objective is to bypass low quality built-in HW resamplers"	),
+	HELPTXT_ITEM( 2, "of Intel HDA/Realtek codecs."						),
+	HELPTXT_ITEM( 2, ""													),
 	HELPTXT_ITEM( 2, "Options:"											),
 	HELPTXT_ITEM( 2, " -h, --help    Show this message"					),
+	HELPTXT_ITEM( 2, " --version     Show version information"			),
 HELPTXT_END
 
 
 STATIC GETOPT_BEGIN( g_LongOpt )
 	GETOPT_ITEM_SYM(	"help",		'h' ),
+	GETOPT_ITEM_SIMPLE(	"version"		),
 GETOPT_END
 
 
@@ -1240,6 +1248,10 @@ INT main( INT nargs, CHAR *argv[] )
 			case 0: // help
 				n_help_layer	= MAX( n_help_layer, 2 );
 				break;
+
+			case 1: // version
+				printf( "%s version %s\n", argv[0], FFTRATE_VERSION );
+				return 0;
 			}
 			break;
 		}

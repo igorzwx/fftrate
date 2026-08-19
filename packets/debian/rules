@@ -26,6 +26,7 @@ binary-arch: build install
 	dh_testroot -a
 	dh_installchangelogs -a
 	dh_installdocs -a
+	dh_installman -a
 	dh_compress -a
 	dh_fixperms -a
 	dh_installdeb -a

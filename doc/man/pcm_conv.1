@@ -1,0 +1,97 @@
+.TH PCM_CONV 1 "2026" "fftrate 1.6.3" "User Commands"
+.SH NAME
+pcm_conv \- convert WAVE files: change sample rate, bit depth, or channels
+.SH DESCRIPTION
+.B pcm_conv
+is a command-line WAVE file converter for audio production: change sample
+rate, bit depth, or channel layout using high-quality FFT/DCT-based
+resampling.
+.P
+Typical use: downsampling high-resolution DXD/DSF masters to a HiRes PCM
+format suitable for playback on a given OS/DAC combination \(em e.g. 32-bit
+integer 192kHz for Linux/ALSA, or 32-bit float 96kHz for macOS/CoreAudio.
+.SH USAGE
+.TP
+Downsample a DXD/DSF-derived 32-bit/352.8kHz WAV to 32-bit/192kHz (Linux, FFT transform):
+.B pcm_conv \-b 32 \-f 192000 \-T fft \-v master_352k8_32bit.wav out_192k_32bit_linux.wav
+.TP
+Downsample the same source to 32-bit float/96kHz (macOS):
+.B pcm_conv \-b 32f \-f 96000 \-T fft \-v master_352k8_32bit.wav out_96k_32bitfloat_macos.wav
+.SH SYNOPSIS
+.B pcm_conv
+.RI [ input.wav ]\ [ output.wav ]
+[options]
+.SH EXAMPLE
+Convert a 352800 Hz / 32-bit file down to 192000 Hz, using the FFT
+transform, with verbose progress output:
+.sp
+.nf
+$ pcm_conv \-f 192000 \-b 32 \-T fft \-v \e
+    "Faust \- Funeral March Of A Marionette \- 32bit.wav" \e
+    Faust_192kHz_32bit_downfft.wav
+
+Input file : Faust \- Funeral March Of A Marionette \- 32bit.wav
+ Samples rate    = 352800 Hz
+ Channels        = 2
+ Bits per sample = 32 (actual: 32, float)
+
+Output file: Faust_192kHz_32bit_downfft.wav
+ Samples rate    = 192000 Hz
+ Channels        = 2
+ Bits per sample = 32 (actual: 32, fixed)
+
+Windows : "Vorbis" (37632 => 20480)
+Delay   : 107 ms
+Trans.  : "FFT"
+
+[|||||||||||||||||||||||||||||||||||||||||||||||||||]  99.0 %
+Ok.
+
+File duration  : 275.906667 sec
+Processing time: 13.305000 sec ( 4.82% of real time)
+.fi
+.SH OPTIONS
+.TP
+.B \-c \fInumber\fR
+Output channels: 1=mono, 2=stereo, 3=2/1 surround, 4=2/2 quadro,
+5=3/2 surround, 6=3/2+SW dolby.
+.TP  
+.B \-I \fIorder\fR  
+Input channel order (comma-separated speaker list, e.g. FL,FR,FC,LFE,BL,BR,RL,RR).  
+Use to match the channel order expected by the source's audio subsystem:  
+.RS  
+.IP \(bu 2  
+OSS4: FL,FR,FC,LFE,BL,BR,RL,RR  
+.IP \(bu 2  
+ALSA: FL,FR,BL,BR,FC,LFE,RL,RR  
+.IP \(bu 2  
+MS/Windows: FL,FR,FC,LFE,BL,BR,RL,RR,BC,SL,SR,TC,TFL,TFC,TFR,TBL,TBC,TBR  
+.RE  
+.TP  
+.B \-O \fIorder\fR  
+Output channel order (same syntax/values as \-I), for matching the  
+target playback subsystem's expected channel order.
+.TP
+.B \-b \fIbits\fR
+Output bit depth: 8, 16 .. 32, or 32f/64f for floating point.
+.TP
+.B \-f \fIfrequency\fR
+Output sample rate in Hz (tested from 6000 to 192000).
+.TP
+.B \-T \fItrans\fR
+Transform: dct (default) or fft.
+.TP
+.B \-W \fIwin\fR
+Window: vorbis (default), hanning, or rect.
+.TP
+.B \-v
+Show verbose info while converting (like the example above).
+.TP
+.B \--help-all
+Show all help information.
+.TP
+.B \--version
+Show version information.
+.SH SEE ALSO
+.BR pcm_info (1),
+.BR pcm_mse (1)

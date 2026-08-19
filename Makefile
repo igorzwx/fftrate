@@ -7,6 +7,16 @@ ifneq ($(DSTD),)
 ARCH := $(DSTD)
 endif
 
+# Version: prefer git describe, persist to VERSION, fall back to VERSION if git fails
+GIT_VERSION := $(strip $(shell git describe --tags --always --dirty 2>/dev/null))
+ifneq ($(GIT_VERSION),)
+VERSION_NUM := $(GIT_VERSION)
+$(shell echo "$(VERSION_NUM)" > VERSION)
+else 
+VERSION_NUM := $(strip $(shell cat VERSION 2>/dev/null || echo unknown))
+endif
+export VERSION_NUM
+
 all: libs apps tools
 	( cd src/tests; $(MAKE) -f $(MAKEF) )  
 	@# relocate core .so files that landed in bin/ due to makeso.mk's BIND

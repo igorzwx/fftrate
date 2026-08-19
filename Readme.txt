@@ -3,6 +3,10 @@
   - number of channels
   - sampling rate (this is the most important thing!)
 
+The ALSA rate plugin (src/tools/plugin/) lets fftrate handle all real-time  
+sample-rate conversion in userspace, bypassing low-quality built-in HW  
+resamplers of Intel HDA/Realtek codecs.
+
 2. Project tree.
 ---                             top
   |

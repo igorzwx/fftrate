@@ -1,0 +1,80 @@
+.TH PCM_MSE 1 "2026" "fftrate 1.6.3" "User Commands"
+.SH NAME
+pcm_mse \- compute Mean Squared Error between two WAV files
+.SH SYNOPSIS
+.B pcm_mse
+.I file1.wav file2.wav
+.RI [ resid.wav ]
+.RB [ \-b " samples" ]
+.RB [ \-e " samples" ]
+.RB [ \-h | \-\-help | \-\-help\-all | \-\-version ]
+.SH DESCRIPTION
+Computes the MSE between two WAV files, optionally saving the residual
+(difference) signal. Ideal for evaluating audio resampling quality
+(dct vs fft, window types, bit-depth/rate conversions).
+.SH OPTIONS
+.TP
+.I file1.wav
+First input WAV file.
+.TP
+.I file2.wav
+Second input WAV file.
+.TP
+.I resid.wav
+Optional output file for residual signal.
+.TP
+.BI \-b " samples"
+Start comparison at sample number (default: 0).
+.TP
+.BI \-e " samples"
+End comparison at sample number (default: end of file).
+.TP
+.B \-h, \-\-help
+Show this message.
+.TP
+.B \-\-help\-all
+Show full help.
+.TP
+.B \-\-version
+Show version information.
+.SH EXAMPLES
+.SS Round-trip resampling quality test:
+Downsample a DXD/high-res master, then upsample back to the original
+format, and measure the residual against the original:
+.PP
+.EX
+pcm_conv \-f 192000 \-b 32 \-T fft \-v master_dxd.wav down_192k.wav
+pcm_conv \-f 352800 \-b 32f \-T fft \-v down_192k.wav roundtrip_dxd.wav
+pcm_mse master_dxd.wav roundtrip_dxd.wav resid.wav -b 10 -e 10000000000
+.EE
+.PP
+Compare the printed MSE/max-difference values between
+.B \-T fft
+and
+.B \-T dct
+round trips to judge which transform introduces less error for a given
+material.
+.PP
+Because of the high resolution of 32-bit Float DXD waves, FFT downsampling to HiRes  
+32-bit/192kHz is very exact. For example, comparing a downsampled/upsampled  
+round trip against the original DXD source: 
+.PP
+.nf
+Results of measurement:  
+  
+[FFT] Front Left:    MSE = 0.0001395137  
+[DCT] Front Left:    MSE = 0.0001395591  
+  
+[FFT] Front Right:   MSE = 0.0001161680  
+[DCT] Front Right:   MSE = 0.0001162062  
+  
+MSE is the Mean Squared Error  
+  
+[FFT downsampling] Processing time: 13.305000 sec ( 4.82% of real time)  
+[DCT downsampling] Processing time: 7.655000 sec ( 2.77% of real time)  
+.fi
+.PP
+Digital eXtreme Definition (DXD) mitigates the problem of the Gibbs phenomenon, the main cause of audio distortions produced by resampling. 
+.SH SEE ALSO
+.BR pcm_conv (1),
+.BR pcm_info (1)

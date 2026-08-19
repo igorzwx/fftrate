@@ -2,7 +2,7 @@ CC      = gcc
 CPP     = g++
 AR      = ar
 
-CFLAGS  = -O2 -Wall -fPIC
+CFLAGS  = -O2 -Wall -fPIC -DFFTRATE_VERSION='"$(strip $(VERSION_NUM))"'
 LDFLAGS = -s
 
 INCD    = $(ROOT)/lib

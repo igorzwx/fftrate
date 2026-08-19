@@ -89,12 +89,14 @@ STATIC HELPTXT_BEGIN( g_szHelp )
 	HELPTXT_ITEM( 2, " -v            Show verbose information"									),
 	HELPTXT_ITEM( 2, " -h, --help    Show this message"											),
 	HELPTXT_ITEM( 2, " --help-all    Show all help info"										),
+	HELPTXT_ITEM( 2, " --version     Show version information"									),
 HELPTXT_END
 
 
 STATIC GETOPT_BEGIN( g_LongOpt )
 	GETOPT_ITEM_SYM(	"help",		'h' ),
 	GETOPT_ITEM_SIMPLE(	"help-all"		),
+	GETOPT_ITEM_SIMPLE(	"version"		),
 GETOPT_END
 
 
@@ -207,6 +209,10 @@ INT main( INT nArg, CHAR *pszArgs[] )
 			case 1: // help-all
 				nHelpLayer = MAX( nHelpLayer, 3 );
 				break;
+
+			case 2: // version  
+				printf( "%s version %s\n", pszArgs[0], FFTRATE_VERSION );
+				return 0;
 			}
 			break;
 		}

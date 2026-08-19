@@ -1,0 +1,121 @@
+.TH ARATECONF 1 "November 2025" "fftrate 1.6.3" "User Commands"
+.SH NAME
+arateconf \- interactive ALSA configuration tool for fftrate
+.SH DESCRIPTION
+.B arateconf
+is an interactive, self-explanatory utility to create ALSA configuration
+files (~/.asoundrc), using
+.B fftrate
+as the rate-conversion plugin.
+.P
+By default it is configured for HiRes 32-bit Integer 192kHz. The objective
+is to bypass the low-quality built-in hardware resamplers found in Intel
+HDA/Realtek codecs by forcing ALSA to always talk to the hardware at a
+fixed 192kHz/32-bit rate, letting fftrate handle all real-time sample-rate
+conversion in userspace.
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Show usage message.
+.TP
+.B \-\-help\-all
+Show all help information.
+.TP
+.B \-\-version
+Show version information.
+.SH USAGE
+Run
+.B arateconf
+with no arguments to enter interactive mode:
+.RS
+.nf
+$ arateconf
+.fi
+.RE
+.P
+For an Intel HDA codec on the motherboard, try 32-bit/192000Hz. For USB
+headsets/DACs, try 16-bit/48000Hz.
+.SH INTERACTIVE COMMANDS
+.TP
+.B 0, 1, ...
+Select a sound card from the list.
+.TP
+.B U
+Toggle "used" flag for the current device.
+.TP
+.B P / R
+Set current device as default player / recorder.
+.TP
+.B O / I
+Set output / input hardware device.
+.TP
+.B F
+Change sample format (rate, bit depth, channels).
+.TP
+.B C
+Select converter plugin (fftrate, speexrate, samplerate, ...).
+.TP
+.B A / M
+Show / edit plugin chain (Convert, Expand, Asym, Dmix, Dsnoop, etc).
+.TP
+.B T
+Run hardware compatibility test on all configured devices.
+.TP
+.B S
+Save configuration to ~/.asoundrc.
+.TP
+.B X
+Delete existing ~/.asoundrc.
+.TP
+.B ESC
+Exit.
+.SH EXAMPLES
+.TP
+Configure an Intel HDA output/input at HiRes 32-bit/192kHz, run hardware test, then save:
+.RS
+.nf
+$ arateconf
+   (press 0 to select "HDA-Intel - HDA Intel PCH")
+   (press F, set Format: 192000 Hz, 2 ch, 'S32_LE')
+   (press T to test)
+
+Testing H/W compatibility ...
+
+Device: PCH
+Output:
+ Open device "hw:PCH,0" ... Ok.
+ Set rate 192000 Hz ... Ok.
+ Set channels 2 ... Ok.
+ Set format \(aqS32_LE\(aq ... Ok.
+ Set buffer size 30720 \-> 30720
+ Set period size 7680 \-> 7680
+Input:
+ Open device "hw:PCH,0" ... Ok.
+ Set rate 192000 Hz ... Ok.
+ Set format \(aqS32_LE\(aq ... Ok.
+ Set buffer size 30720 \-> 30720
+ Set period size 7680 \-> 7680
+
+   (press S to save to ~/.asoundrc)
+.fi
+.RE
+.TP
+Verify the resulting config by playing/recording at a lower native rate
+(fftrate transparently up/down-converts to/from the fixed 192kHz hardware rate):
+.RS
+.nf
+$ aplay audio_test_48kHz_16bit.wav
+Input:  48000 Hz, 2 ch, \(aqs16_le\(aq (0x2): dummy = 0, period = 1920
+Output: 192000 Hz, 2 ch, \(aqs32_le\(aq (0xa): dummy = 0, period = 7680
+Rates:  48000 \-\-> 192000 (J: 0.00%, T: FFT, W: Vorbis)
+Ok.
+.fi
+.RE
+.SH FILES
+.I ~/.asoundrc
+\- generated ALSA configuration (or
+.I /etc/asound.conf
+when run as root).
+.SH SEE ALSO
+.BR pcm_conv (1),
+.BR asoundrc (5)
