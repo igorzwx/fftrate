@@ -7,15 +7,28 @@ ifneq ($(DSTD),)
 ARCH := $(DSTD)
 endif
 
-# Version: prefer git describe, persist to VERSION, fall back to VERSION if git fails
-GIT_VERSION := $(strip $(shell git describe --tags --always --dirty 2>/dev/null))
-ifneq ($(GIT_VERSION),)
-VERSION_NUM := $(GIT_VERSION)
+# Version: binary version prefer git describe, persist to VERSION, fall back to VERSION if git fails
+# VERSION file always holds the clean tag (e.g. v1.6.3.1).
+# FFTRATE_VERSION (used by binaries) holds the full descriptor
+# (tag-commits-hash[-dirty]) so --version reflects exact build state.
+GIT_TAG  := $(strip $(shell git describe --tags --abbrev=0 2>/dev/null))
+GIT_FULL := $(strip $(shell git describe --tags --always --dirty 2>/dev/null))
+
+ifneq ($(GIT_TAG),)
+VERSION_NUM := $(GIT_TAG)
 $(shell echo "$(VERSION_NUM)" > VERSION)
-else 
+else
 VERSION_NUM := $(strip $(shell cat VERSION 2>/dev/null || echo unknown))
 endif
+  
+ifneq ($(GIT_FULL),)
+FFTRATE_VERSION := $(GIT_FULL)
+else
+FFTRATE_VERSION := $(VERSION_NUM)
+endif
+
 export VERSION_NUM
+export FFTRATE_VERSION
 
 all: libs apps tools
 	( cd src/tests; $(MAKE) -f $(MAKEF) )  
