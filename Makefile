@@ -31,10 +31,11 @@ export VERSION_NUM
 export FFTRATE_VERSION
 
 all: libs apps tools
-	( cd src/tests; $(MAKE) -f $(MAKEF) )  
+	( cd src/tests; $(MAKE) -f $(MAKEF) )
+	( cd src/apps/pcm_common; $(MAKE) -f makefile.st so )
 	@# relocate core .so files that landed in bin/ due to makeso.mk's BIND
 	mkdir -p lib
-	for f in cmdline convert fft mathex profiler riffio stretch thr; do \
+	for f in cmdline convert fft mathex profiler riffio stretch thr pcm_common; do \
 		mv bin/lib$$f.so lib/ 2>/dev/null || true; \
 	done
 	@# stage headers
@@ -44,9 +45,11 @@ all: libs apps tools
 		mkdir -p include/fftrate/$$d; \
 		cp src/lib/$$d/*.h include/fftrate/$$d/ 2>/dev/null || true; \
 	done
+	mkdir -p include/fftrate/pcm_common
+	cp src/apps/pcm_common/*.h include/fftrate/pcm_common/ 2>/dev/null || true
 	@# stage pkg-config
 	mkdir -p lib/$(ARCH)/pkgconfig
-	printf 'prefix=%s\nexec_prefix=$${prefix}\nlibdir=$${exec_prefix}/lib\nincludedir=$${prefix}/include/fftrate\n\nName: fftrate\nDescription: FFT-based sample rate conversion library\nVersion: 1.0\nLibs: -L$${libdir} -lconvert -lfft -lmathex -lriffio -lcmdline -lprofiler -lstretch -lthr\nCflags: -I$${includedir}\n' "$(PREFIX)" > lib/$(ARCH)/pkgconfig/fftrate.pc
+	printf 'prefix=%s\nexec_prefix=$${prefix}\nlibdir=$${exec_prefix}/lib\nincludedir=$${prefix}/include/fftrate\n\nName: fftrate\nDescription: FFT-based sample rate conversion library\nVersion: 1.0\nLibs: -L$${libdir} -lconvert -lfft -lmathex -lriffio -lcmdline -lprofiler -lstretch -lthr -lpcm_common\nCflags: -I$${includedir}\n' "$(PREFIX)" > lib/$(ARCH)/pkgconfig/fftrate.pc
 	@# stage config
 	mkdir -p etc
 	cp packets/etc/fftrate.conf etc/
