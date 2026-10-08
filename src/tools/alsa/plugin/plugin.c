@@ -207,7 +207,21 @@ static int data_setup( conv_data *data, snd_pcm_rate_side_info_t *info, int n_ch
 		break;
 
 	case SND_PCM_FORMAT_FLOAT_LE:
+		data->format_tag	= WAVE_FORMAT_IEEE_FLOAT;
+		data->sample_size	= 4;
+		data->dummy			= 0;
+		data->fill			= 0x00;
+		fmt_name			= "float_le";
+		break;
+
 	case SND_PCM_FORMAT_FLOAT64_LE:
+		data->format_tag	= WAVE_FORMAT_IEEE_FLOAT;
+		data->sample_size	= 8;
+		data->dummy			= 0;
+		data->fill			= 0x00;
+		fmt_name			= "float64_le";
+		break;
+
 	default:
 		fmt_name			= "unsupported";
 		break;
