@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include <stddef.h>   /* offsetof */
 
 #include <alsa/asoundlib.h>
 #include <alsa/pcm_rate.h>
@@ -417,15 +418,22 @@ static int pcm_rate_init( void *obj, snd_pcm_rate_info_t *info )
 
 		//--------------------------------------------------------------------------------------------
 
-		if( ( in_rate * info->out.period_size ) != ( out_rate * info->in.period_size ) )
 		{
-			double l_in  = log2( (double)in_rate  / (double)info->in.period_size );
-			double l_out = log2( (double)out_rate / (double)info->out.period_size );
-			int   fpp   = (int)( 0.5 * ( l_in + l_out ) );
+			uint64_t prod_in  = (uint64_t)in_rate  * info->out.period_size;
+			uint64_t prod_out = (uint64_t)out_rate * info->in.period_size;
 
-			fpp = MAX( fpp, 0 );
-			in_rate	 = info->in.period_size  << fpp;
-			out_rate = info->out.period_size << fpp;
+			fprintf( OUTF, "Period ratio: %.6f\n", (double)prod_in / (double)prod_out );
+
+			if( prod_in != prod_out )
+				{
+					double l_in  = log2( (double)in_rate  / (double)info->in.period_size );
+					double l_out = log2( (double)out_rate / (double)info->out.period_size );
+					int   fpp   = (int)( 0.5 * ( l_in + l_out ) );
+
+					fpp = MAX( fpp, 0 );
+						in_rate	 = (int)( (uint64_t)info->in.period_size  << fpp );
+						out_rate = (int)( (uint64_t)info->out.period_size << fpp );
+				}
 		}
 
 		//--------------------------------------------------------------------------------------------
@@ -783,6 +791,30 @@ static void pcm_rate_dump( void *obj, snd_output_t *out )
 }
 #endif
 
+#if SND_PCM_RATE_PLUGIN_VERSION >= 0x010003
+static int pcm_rate_formats
+(
+	void			*obj,
+	uint64_t		*in_formats,
+	uint64_t		*out_formats,
+	unsigned int	*flags
+)
+{
+	dbg_printf( "[pcm_rate_formats]\n" );
+
+	*in_formats = *out_formats =
+		  ( 1ULL << SND_PCM_FORMAT_U8 )
+		| ( 1ULL << SND_PCM_FORMAT_S16_LE )
+		| ( 1ULL << SND_PCM_FORMAT_S24_3LE )
+		| ( 1ULL << SND_PCM_FORMAT_S24_LE )
+		| ( 1ULL << SND_PCM_FORMAT_S32_LE )
+		| ( 1ULL << SND_PCM_FORMAT_FLOAT_LE )
+		| ( 1ULL << SND_PCM_FORMAT_FLOAT64_LE );
+
+	*flags = 0;
+	return 0;
+}
+#endif
 
 static const snd_pcm_rate_ops_t pcm_rate_ops =
 {
@@ -800,6 +832,10 @@ static const snd_pcm_rate_ops_t pcm_rate_ops =
 	.version				= SND_PCM_RATE_PLUGIN_VERSION,
 	.get_supported_rates	= pcm_rate_rates,
 	.dump					= pcm_rate_dump,
+#endif
+
+#if SND_PCM_RATE_PLUGIN_VERSION >= 0x010003
+	.get_supported_formats	= pcm_rate_formats,
 #endif
 };
 
@@ -830,11 +866,18 @@ int SND_PCM_RATE_PLUGIN_ENTRY( fftrate )
 	arrzero_unit( inst );
 	*objp = inst;
 
-#if SND_PCM_RATE_PLUGIN_VERSION >= 0x010002
-	if( version == 0x010001 )
-		arrcpy_bytes( ops, &pcm_rate_ops, sizeof(snd_pcm_rate_old_ops_t) )
-	else
-#endif
+#if SND_PCM_RATE_PLUGIN_VERSION >= 0x010002  
+	if( version == 0x010001 )  
+	{  
+		arrcpy_bytes( ops, &pcm_rate_ops, sizeof(snd_pcm_rate_old_ops_t) );  
+	}  
+	else  
+	if( version == 0x010002 )  
+	{  
+		arrcpy_bytes( ops, &pcm_rate_ops, sizeof(snd_pcm_rate_v2_ops_t) );  
+	}  
+	else  
+#endif  
 		*ops = pcm_rate_ops;
 
 	return 0;
