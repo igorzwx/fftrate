@@ -36,7 +36,9 @@
 // Definition
 //-----------------------------------------------------------------------------
 #define DEFAULT_OUTPUT		"convert.wav"
-#define BUFFER_SIZE			65636L
+#define BUFFER_SIZE			4194304L	/* 4 MiB: large enough for high-ratio
+						 * FFT windows (e.g. DSD512-rate simulation,
+						 * 352800 Hz -> 5644800 Hz, 64-bit float) */
 
 
 //=============================================================================
